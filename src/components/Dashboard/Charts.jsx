@@ -117,7 +117,7 @@ const Charts = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 h-100">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           Balance Overview

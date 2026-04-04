@@ -2,7 +2,7 @@ import { useFinance } from "../../context/FinanceContext";
 import { Search, Filter, ArrowUpDown } from "lucide-react";
 import { categories } from "../../data/mockData";
 
-export const TransactionFilters = () => {
+const TransactionFilters = () => {
   const { filters, setFilters } = useFinance();
 
   const handleSearchChange = (e) =>
@@ -22,7 +22,7 @@ export const TransactionFilters = () => {
   return (
     <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 mb-6 space-y-4 md:space-y-0 md:flex md:items-center md:gap-4 md:flex-wrap">
       {/* Search Bar */}
-      <div className="relative flex-1 min-w-[200px]">
+      <div className="relative flex-1 min-w-50">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
           <Search size={18} className="text-gray-400" />
         </div>
