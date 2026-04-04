@@ -3,6 +3,7 @@ import { useFinance } from "../../context/FinanceContext";
 import { categories } from "../../data/mockData";
 import { X } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
+import { format } from "date-fns";
 
 const TransactionForm = ({ isOpen, onClose, initialData = null }) => {
   const { addTransaction, updateTransaction } = useFinance();
@@ -11,7 +12,7 @@ const TransactionForm = ({ isOpen, onClose, initialData = null }) => {
     amount: "",
     category: "Other",
     type: "expense",
-    date: new Date().toISOString().slice(0, 16),
+    date: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
     description: "",
   });
 
@@ -19,14 +20,14 @@ const TransactionForm = ({ isOpen, onClose, initialData = null }) => {
     if (initialData) {
       setFormData({
         ...initialData,
-        date: new Date(initialData.date).toISOString().slice(0, 16),
+        date: format(new Date(initialData.date), "yyyy-MM-dd'T'HH:mm"),
       });
     } else {
       setFormData({
         amount: "",
         category: "Other",
         type: "expense",
-        date: new Date().toISOString().slice(0, 16),
+        date: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
         description: "",
       });
     }
