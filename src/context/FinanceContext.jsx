@@ -68,13 +68,25 @@ export const FinanceProvider = ({ children }) => {
 
   // Derived state
   const getFilteredTransactions = () => {
-    let result = [...transactions];
+    // 1. Calculate running balance chronologically
+    const chronologicallySorted = [...transactions].sort(
+      (a, b) => new Date(a.date) - new Date(b.date),
+    );
+    let runningBalance = 0;
+    const withRunningBalance = chronologicallySorted.map((t) => {
+      runningBalance += t.type === "income" ? t.amount : -t.amount;
+      return { ...t, runningBalance };
+    });
+
+    let result = [...withRunningBalance];
 
     if (filters.search) {
+      const searchLower = filters.search.toLowerCase();
       result = result.filter(
         (t) =>
-          t.category.toLowerCase().includes(filters.search.toLowerCase()) ||
-          t.amount.toString().includes(filters.search),
+          t.category.toLowerCase().includes(searchLower) ||
+          t.amount.toString().includes(searchLower) ||
+          (t.description && t.description.toLowerCase().includes(searchLower)),
       );
     }
 
