@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useFinance } from "../../context/FinanceContext";
-import { formatDate, formatCurrency } from "../../utils/helpers";
+import { formatDate, formatCurrency, exportToCSV } from "../../utils/helpers";
 import TransactionFilters from "./TransactionFilters";
 import TransactionForm from "./TransactionForm";
-import { Pencil, Trash2, Plus, AlertCircle } from "lucide-react";
+import { Pencil, Trash2, Plus, AlertCircle, Download } from "lucide-react";
 import { clsx } from "clsx";
 
 const TransactionList = () => {
@@ -27,15 +27,24 @@ const TransactionList = () => {
         <h2 className="text-xl font-bold text-gray-900 dark:text-white">
           Recent Transactions
         </h2>
-        {role === "admin" && (
+        <div className="flex items-center gap-3">
           <button
-            onClick={handleAddNew}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors text-sm font-medium shadow-sm"
+            onClick={() => exportToCSV(filteredTransactions)}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm font-medium shadow-sm"
           >
-            <Plus size={16} />
-            Add New
+            <Download size={16} />
+            Export CSV
           </button>
-        )}
+          {role === "admin" && (
+            <button
+              onClick={handleAddNew}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors text-sm font-medium shadow-sm"
+            >
+              <Plus size={16} />
+              Add New
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="p-6">

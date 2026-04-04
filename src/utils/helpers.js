@@ -54,3 +54,43 @@ export const calculateMonthlyComparison = (transactions) => {
     previous: calculateTotal(lastMonthTransactions),
   };
 };
+
+export const exportToCSV = (transactions) => {
+  if (!transactions.length) return;
+
+  const headers = [
+    "Date",
+    "Description",
+    "Category",
+    "Type",
+    "Amount",
+    "Running Balance",
+  ];
+  const csvRows = [headers.join(",")];
+
+  transactions.forEach((t) => {
+    const dateFormatted = format(parseISO(t.date), "yyyy-MM-dd");
+    const desc = `"${(t.description || "").replace(/"/g, '""')}"`;
+    const row = [
+      dateFormatted,
+      desc,
+      t.category,
+      t.type,
+      t.amount,
+      t.runningBalance || 0,
+    ];
+    csvRows.push(row.join(","));
+  });
+
+  const blob = new Blob([csvRows.join("\n")], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.setAttribute("href", url);
+  link.setAttribute(
+    "download",
+    `transactions_${format(new Date(), "yyyy-MM-dd")}.csv`,
+  );
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
